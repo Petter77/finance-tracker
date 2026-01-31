@@ -12,8 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.UniqueConstraint;
@@ -37,10 +35,6 @@ public class Category {
 
     @Column(nullable = false, length = 50)
     private String name; 
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private TransactionType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
