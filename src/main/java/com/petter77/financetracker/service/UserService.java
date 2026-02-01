@@ -4,6 +4,7 @@ import com.petter77.financetracker.repository.UserRepository;
 import com.petter77.financetracker.dto.request.CreateUserRequest;
 import com.petter77.financetracker.dto.response.UserResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -13,6 +14,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public UserResponse createUser(CreateUserRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new IllegalArgumentException("Username already exists");
