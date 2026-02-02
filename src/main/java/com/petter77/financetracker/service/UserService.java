@@ -5,6 +5,8 @@ import com.petter77.financetracker.dto.request.CreateUserRequest;
 import com.petter77.financetracker.dto.response.UserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -35,7 +37,36 @@ public class UserService {
             savedUser.getId(),
             savedUser.getUsername(),
             savedUser.getEmail(),
-            savedUser.getCreatedAt()
+            savedUser.getCreatedAt(),
+            savedUser.getUpdatedAt()
+        );
+    }
+
+    public List<UserResponse> getAllUsers() {
+        List<User> users = userRepository.findAll();
+
+        List<UserResponse> responses = new ArrayList<>();
+        for (User user : users) {
+            UserResponse response = new UserResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+            );
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    public UserResponse getUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return new UserResponse(
+            user.getId(),
+            user.getUsername(),
+            user.getEmail(),
+            user.getCreatedAt(),
+            user.getUpdatedAt()
         );
     }
 }
